@@ -1,119 +1,145 @@
-PHẦN 11: REPL
-Câu hỏi:
- * REPL là gì?
- - REPL là viết tắt của Read-Eval-Print Loop (Đọc-Thực hiện-In ra-Lặp lại), một môi trường tương tác cho phép người dùng nhập lệnh JavaScript và nhận kết quả ngay lập tức
+# PHẦN 11: REPL
 
- * Biến _ trong REPL để làm gì?
- - Biến _ trong REPL lưu kết quả của phép tính/lệnh trước đó
-  
- * Các lệnh đặc biệt như .help, .exit dùng khi nào?
-   - .help: Hiển thị danh sách các lệnh đặc biệt có sẵn trong REPL
-   - .exit: Thoát khỏi REPL (cũng có thể dùng Ctrl+D hoặc Ctrl+C hai lần)
- * Mở REPL (node) → thử khai báo biến, dùng _, Tab, .help.
- - mở terminal rồi viết node và khai bao biến
-   ![alt text](img/image-1.png)
- - dùng  - 
-   ![alt text](img/image-2.png)
-  - Dùng phím Tab để tự động hoàn thành tên biến hoặc thuộc tính
+## Câu hỏi:
+- **REPL là gì?**  
+  REPL là viết tắt của Read-Eval-Print Loop (Đọc-Thực hiện-In ra-Lặp lại), một môi trường tương tác cho phép người dùng nhập lệnh JavaScript và nhận kết quả ngay lập tức.
 
-   - Dùng .help để xem các lệnh có sẵn
-     ![alt text](img/image-3.png)
- * 🎯 Bài tập nâng cao:
- 
- - Tạo một file repl-helper.js khởi chạy custom REPL:
-    ![alt text](img/image-4.png)
- - Gợi ý (autocomplete) các lệnh tự tạo: sayHi, now, sum(a,b)
-   vd: viết chữ s rồi tab sẽ ra sayHi rồi viết thêm 2 dấu () để thành hàm, tương tự với now và sum(a,b).
- - Khi gõ .save thì lưu lịch sử REPL vào file history.txt
-     ![alt text](img/image-5.png)
- PHẦN 12–14: Command line
-Câu hỏi:
-* Làm sao nhận input từ process.argv?
- - process.argv là mảng chứa các tham số dòng lệnh khi chạy chương trình Node.js:
- ![alt text](img/image-6.png)
-* Khác biệt giữa stdout và stderr?
-  ![alt text](img/image-7.png)
-  // Ghi stdout
-process.stdout.write('Thông điệp thông thường\n');
+- **Biến `_` trong REPL để làm gì?**  
+  Biến `_` trong REPL lưu kết quả của phép tính/lệnh trước đó.
 
-// Ghi stderr
-process.stderr.write('Thông báo lỗi!\n');
-* Cách dùng readline?
-  - Module readline giúp đọc input từ terminal:
-  Mở trình soạn thảo code (VS Code, Sublime Text, Notepad++)
+- **Các lệnh đặc biệt như `.help`, `.exit` dùng khi nào?**  
+  - `.help`: Hiển thị danh sách các lệnh đặc biệt có sẵn trong REPL.  
+  - `.exit`: Thoát khỏi REPL (cũng có thể dùng Ctrl+D hoặc Ctrl+C hai lần).
 
-    1.Tạo file mới với đuôi .js
-    2.viết code readline
-    3.Lưu file
-    4.Mở terminal/command prompt
-    5.Di chuyển đến thư mục chứa file
-    6.Gõ lệnh node tên_file.js
-  ![alt text](img/image-8.png)
-Bài tập nhỏ:
-* Viết file sum.js tính tổng 2 số từ dòng lệnh.
-  ![alt text](img/image-9.png)
-* Dùng readline hỏi tên và in ra Hello <tên>.
+- **Mở REPL (node) → thử khai báo biến, dùng `_`, Tab, `.help`.**  
+  - Mở terminal rồi viết `node` và khai báo biến.  
+    ![alt text](image.png) 
+  - Dùng `_`.  
+        > a
+        6
+        > _ * 6
+        36
+    
+  - Dùng phím Tab để tự động hoàn thành tên biến hoặc thuộc tính.  
+     viết 1 từ có trong thư mục hoặc có trong các câu lệnh rồi ấn tab để tự động điền
+  - Dùng `.help` để xem các lệnh có sẵn.  
+    ![alt text](image-1.png)
+
+## 🎯 Bài tập nâng cao:
+- Tạo một file `repl-helper.js` khởi chạy custom REPL:  
+    ![alt text](image-2.png)
+- Gợi ý (autocomplete) các lệnh tự tạo: `sayHi`, `now`, `sum(a,b)`.  
+  Ví dụ: viết chữ `s` rồi Tab sẽ ra `sayHi`, sau đó viết thêm `()` để thành hàm, tương tự với `now` và `sum(a,b)`.  
+- Khi gõ `.save` thì lưu lịch sử REPL vào file `history.txt`.  
+  ![alt text](img/image-5.png)
+
+---
+
+# PHẦN 12–14: Command Line
+
+## Câu hỏi:
+- **Làm sao nhận input từ `process.argv`?**  
+  `process.argv` là mảng chứa các tham số dòng lệnh khi chạy chương trình Node.js:  
+
+  ![alt text](img/image-6.png)
+
+- **Khác biệt giữa `stdout` và `stderr`?**  
+  - Ghi `stdout`:  
+    ```javascript
+    process.stdout.write('Thông điệp thông thường\n');
+    ```
+  - Ghi `stderr`:  
+    ```javascript
+    process.stderr.write('Thông báo lỗi!\n');
+    ```
+    ![alt text](img/image-7.png)
+
+- **Cách dùng `readline`?**  
+  Module `readline` giúp đọc input từ terminal:  
+  1. Mở trình soạn thảo code (VS Code, Sublime Text, Notepad++).  
+  2. Tạo file mới với đuôi `.js`.  
+  3. Viết code `readline`.  
+  4. Lưu file.  
+  5. Mở terminal/command prompt.  
+  6. Di chuyển đến thư mục chứa file.  
+  7. Gõ lệnh `node tên_file.js`.  
+     ![alt text](img/image-8.png)
+
+## Bài tập nhỏ:
+- Viết file `sum.js` tính tổng 2 số từ dòng lệnh. 
+
+  ![alt text](img/image-9.png)  
+
+- Dùng `readline` hỏi tên và in ra `Hello <tên>`.  
+
   ![alt text](img/image-10.png)
-🎯 Bài tập nâng cao:
- * Viết CLI tool csv-summarizer.js và Đọc file, tính tổng, trung bình các cột số.
-   ![alt text](img/image-12.png)
-   ![alt text](img/image-13.png)
-   ![alt text](img/image-14.png)
-   ![alt text](img/image-15.png)
- * Output ra stdout có định dạng bảng.
-![alt text](img/image-11.png)
 
-PHẦN 15–27: npm & npx
+## 🎯 Bài tập nâng cao:
+- Viết CLI tool `csv-summarizer.js` để đọc file, tính tổng, trung bình các cột số.  
+  ![alt text](img/image-12.png)  
+  ![alt text](img/image-13.png)  
+  ![alt text](img/image-14.png)  
+  ![alt text](img/image-15.png)  
+- Output ra `stdout` có định dạng bảng.  
 
-Câu hỏi:
- * dependencies vs devDependencies?
-    - dependencies: Các gói cần thiết để chạy ứng dụng trong môi trường production (VD: express, react)
-    - devDependencies: Các gói chỉ cần cho phát triển (VD: jest, eslint, webpack)
- * Khi nào dùng npx?
-    - Khi muốn chạy các gói CLI mà không cần cài đặt global
+  ![alt text](img/image-11.png)
 
-    - Khi muốn thử nghiệm gói nhanh mà không cần cài đặt
+---
 
-    - Khi muốn chạy phiên bản mới nhất của gói mà không cần cập nhật- 
+# PHẦN 15–27: npm & npx
 
- * Tác dụng của package-lock.json?
-    - Ghi lại chính xác phiên bản các gói đã cài đặt
+## Câu hỏi:
+- **`dependencies` vs `devDependencies`?**  
+  - `dependencies`: Các gói cần thiết để chạy ứng dụng trong môi trường production (VD: express, react).  
+  - `devDependencies`: Các gói chỉ cần cho phát triển (VD: jest, eslint, webpack).
 
-    - Đảm bảo mọi môi trường cài đặt cùng phiên bản gói
+- **Khi nào dùng `npx`?**  
+  - Khi muốn chạy các gói CLI mà không cần cài đặt global.  
+  - Khi muốn thử nghiệm gói nhanh mà không cần cài đặt.  
+  - Khi muốn chạy phiên bản mới nhất của gói mà không cần cập nhật.
 
-    - Tăng tốc độ cài đặt trong lần sau
-Bài tập nhỏ:
- * Tạo package.json, cài chalk, in dòng màu.
-    ![altimg/ text](image.png)
-    - in dòng màu
-    ![alt text](img/image-1.png)
- * Tạo script hello gọi bằng npx.
-   #!/usr/bin/env node
-    Dòng #!/usr/bin/env node rất quan trọng: nó giúp file chạy như một chương trình khi gọi bằng npx.
-    console.log("👋 Xin chào từ script npx!");
+- **Tác dụng của `package-lock.json`?**  
+  - Ghi lại chính xác phiên bản các gói đã cài đặt.  
+  - Đảm bảo mọi môi trường cài đặt cùng phiên bản gói.  
+  - Tăng tốc độ cài đặt trong lần sau.
 
-🎯 Bài tập nâng cao:
-Viết 1 CLI tool tên slugify-cli:
-   
+## Bài tập nhỏ:
+- Tạo `package.json`, cài `chalk`, in dòng màu. 
+    npm i chalk
+    tạo file hello.js và code:\n
+          #!/usr/bin/env node
+          import chalk from 'chalk';
 
- * Chuyển chuỗi tiếng Việt thành slug URL (VD: "Xin chào bạn" → xin-chao-ban)
-    - cấu trúc thư mục
-        slugify-cli/
+          console.log(chalk.blue('Xin chào') + ' ' + chalk.red('thế giới!'));
+          console.log(chalk.bgGreen.black('Nền xanh chữ đen'));
+          console.log(chalk.bold.underline('In đậm và gạch chân'));
+
+          console.log('Xin chào từ NPX!');
+  ![alt text](image-3.png)  
+  
+- Tạo script `hello` gọi bằng `npx`.  \n
+
+  #!/usr/bin/env node
+  console.log("👋 Xin chào từ script npx!");
+  ```
+
+## 🎯 Bài tập nâng cao:
+- Viết CLI tool tên `slugify-cli`:  
+  - Chuyển chuỗi tiếng Việt thành slug URL (VD: "Xin chào bạn" → `xin-chao-ban`).  
+  - Cấu trúc thư mục:  
+    ```
+    slugify-cli/
     ├── lib/
     │   └── slugify.js
     ├── bin/
     │   └── index.js
     ├── package.json
     └── README.md
-   
-   
+    ```
+  - Tạo module `slugify` trong `lib/slugify.js`.  \n
     
- * Viết module riêng trong lib/slugify.js
- - Tạo module slugify
-        lib/slugify.js
-    code:
-        function slugify(text) {
-    return text
+    function slugify(text) {
+      return text
         .toLowerCase()
         .replace(/[áàảãạăắằẳẵặâấầẩẫậ]/g, 'a')
         .replace(/[éèẻẽẹêếềểễệ]/g, 'e')
@@ -134,10 +160,10 @@ Viết 1 CLI tool tên slugify-cli:
  * Export CLI bằng bin/index.js, cho phép chạy bằng npx .
    - Tạo CLI
         bin/index.js
-    code:
-        #!/usr/bin/env node
-    const slugify = require('../lib/slugify');
-    const args = process.argv.slice(2);
+    code:\n
+      #!/usr/bin/env node
+      const slugify = require('../lib/slugify');
+      const args = process.argv.slice(2);
 
     if (args.length === 0) {
     console.error('Vui lòng nhập chuỗi cần chuyển đổi');
@@ -324,8 +350,19 @@ Bài tập nhỏ:
 PHẦN 33–40: fs, path, os
 Câu hỏi:
  * fs.readFileSync() và fs.readFile()?
-      ![altimg/ text](image.png)
+      - fs.readFileSync()
 
+      Đồng bộ (Synchronous): Chặn luồng xử lý cho đến khi đọc file xong.
+
+      Trả về dữ liệu ngay lập tức hoặc throw lỗi nếu có.
+
+      Dễ sử dụng nhưng không nên dùng trong server production, vì nó có thể làm chậm toàn bộ ứng dụng nếu file lớn hoặc đọc lâu.
+      - fs.readFile()
+          Bất đồng bộ (Asynchronous): Không chặn luồng xử lý chính.
+
+          Nhận callback để xử lý dữ liệu sau khi đọc xong.
+
+          Thường được dùng trong thực tế, nhất là với ứng dụng web.
  * path.join() để làm gì?
     - Dùng để kết hợp các phần của đường dẫn lại một cách an toàn theo hệ điều hành.
     const path = require('path');
@@ -348,7 +385,7 @@ Bài tập nhỏ:
         fs.appendFileSync(logPath, logMessage);
         console.log('✅ Ghi log thành công!');
 🎯 Bài tập nâng cao:
- Viết công cụ log-archiver.js:
+ Viết công cụ log-archiver.cjs:
  * Lấy tất cả file .log trong thư mục /logs
   await ensureDir(archiveDir);
 
@@ -377,7 +414,10 @@ Bài tập nhỏ:
       await fs.writeFile(zipPath, compressed);
       console.log(`✅ Đã nén ${newName} thành ${zipName}`);
   * Kết Quả:
-  ![alt text](img/image-1.png)
+      viết node .\log-archiver.cjs để chạy \n
+      ![alt text](image-4.png)
+     ![alt text](image-5.png)
+
 Yêu cầu:
  * Dùng fs.promises, path, zlib.
 
@@ -437,6 +477,7 @@ Bài tập nhỏ:
     emitter.emit('ping');
 ![alt text](img/image-4.png)
  * Server đơn giản /hello trả về chuỗi.
+      Tạo http.js và code: \n
      const http = require('http');
 
     http.createServer((req, res) => {
@@ -451,7 +492,7 @@ Bài tập nhỏ:
       console.log('🟢 Server listening on http://localhost:3000');
     });
 
-   ![altimg/ text](image.png)
+   ![alt/ text](img/image.png)
 
 🎯 Bài tập nâng cao:
  Viết HTTP server không dùng Express:
@@ -531,46 +572,156 @@ Bài tập nhỏ:
 PHẦN 44: Streams
 Câu hỏi:
  * Ưu điểm của stream?
+        
+        Tiết kiệm bộ nhớ: không cần load toàn bộ file vào RAM cùng lúc.
 
+        Xử lý dữ liệu lớn hiệu quả: có thể đọc, xử lý và ghi dữ liệu theo từng phần (chunk).
+
+        Nhanh hơn: truyền dữ liệu từng phần giúp tốc độ xử lý nhanh hơn, đặc biệt với file >100MB.
+
+        Hữu ích cho đọc/ghi file lớn, truyền dữ liệu qua mạng, hoặc xử lý media.
 
  * pipe() làm gì?
+        pipe() chuyển dữ liệu từ stream này sang stream khác.
 
+        Nó tự động xử lý việc đọc, ghi và quản lý luồng (stream) hiệu quả.
 
-C * ó bao nhiêu loại stream?
+        Giúp code ngắn gọn và rõ ràng hơn.
+        Ví dụ:
+            readStream.pipe(writeStream);
 
-
+ * Có bao nhiêu loại stream?
+     Có 4 loại stream chính trong Node.js:
+     ![alt text](PHẦN 41–43/img/image-6.png)
+     
 Bài tập nhỏ:
  * Đọc input.txt → ghi output.txt bằng stream.
-Bài tập nâng cao:
- * Viết công cụ thay thế chuỗi trong file lớn:
+      Tạo input.js rồi code: \n
+      const fs = require('fs');
 
+      const readStream = fs.createReadStream('input.txt');
+      const writeStream = fs.createWriteStream('output.txt');
+
+      readStream.pipe(writeStream);
+Bài tập nâng cao:
+ Viết công cụ thay thế chuỗi trong file lớn:
+  
 
  * Đọc file lớn bằng stream (fs.createReadStream)
-
+   
 
  * Thay thế "ERROR" thành "⚠️ Warning" và ghi lại vào file mới
 
 
  * Yêu cầu: xử lý file >100MB mượt mà.
+        Tạo stream.cjs và code: \n
+                  const fs = require('fs');
+          const { Transform } = require('stream');
 
+          // Tạo Transform stream để thay thế chuỗi
+          const replaceStream = new Transform({
+            transform(chunk, encoding, callback) {
+              const replaced = chunk.toString().replace(/ERROR/g, '⚠️ Warning');
+              callback(null, replaced);
+            }
+          });
+
+          const readStream = fs.createReadStream('bigfile.txt');
+          const writeStream = fs.createWriteStream('output_fixed.txt');
+
+          readStream
+            .pipe(replaceStream)
+            .pipe(writeStream);
+
+          writeStream.on('finish', () => {
+            console.log('✅ Hoàn tất xử lý!');
+          });
+    
+ 
 
 PHẦN 45–46: Env & Error Handling
 Câu hỏi:
  * Phân biệt development và production.
-
-
+     ![alt text](image-6.png)
+        Dùng process.env.NODE_ENV để kiểm tra môi trường.
  * Dùng try/catch với async/await?
-
-
+     Khi dùng async/await, bạn cần try/catch để bắt lỗi:
+       async function fetchData() {
+        try {
+          const result = await someAsyncFunction();
+          console.log(result);
+        } catch (err) {
+          console.error('Lỗi xảy ra:', err.message);
+        }
+      }
  * Bắt uncaughtException để làm gì?
+        Bắt những lỗi không được catch ở bất kỳ đâu trong ứng dụng.
 
+        Tránh app bị crash mà không biết lý do.
+
+        Lưu ý: Sau khi bắt uncaughtException, nên process.exit(1) để tránh ứng dụng ở trạng thái không ổn định.
+        VD: \n
+          process.on('uncaughtException', (err) => {
+          console.error('Lỗi không bắt được:', err);
+          // Ghi log, cleanup rồi thoát
+          process.exit(1);
+        });
 
 Bài tập nhỏ:
- * Viết đoạn code chia cho 0 và bắt lỗi.
+  * Viết đoạn code chia cho 0 và bắt lỗi.
+        try {
+        const a = 10;
+        const b = 0;
+        if (b === 0) throw new Error('Không thể chia cho 0!');
+        const result = a / b;
+        console.log(result);
+      } catch (err) {
+        console.error('Lỗi:', err.message);
+      }
+      chạy node tên file .js
+      ![alt text](image-7.png)
  Bài tập nâng cao:
  * Tạo middleware xử lý lỗi cho Express:
+     - Cài đặt Express (nếu chưa):
+          npm install express
+      Tạo error-handling.js như sau:
+   Và code:
+        const express = require('express');
+        const fs = require('fs');
+        const app = express();
 
+        // Giả middleware test lỗi
+        app.get('/error', (req, res, next) => {
+          next(new Error('Lỗi xảy ra ở route /error!'));
+        });
 
+        // Middleware 404
+        app.use((req, res, next) => {
+          const err = new Error('Không tìm thấy tài nguyên');
+          err.status = 404;
+          next(err);
+        });
+
+        // Middleware xử lý lỗi
+        app.use((err, req, res, next) => {
+          const status = err.status || 500;
+          const env = process.env.NODE_ENV || 'development';
+
+          // Ghi log lỗi vào file
+          fs.appendFileSync('error.log', `[${new Date().toISOString()}] ${err.stack}\n`);
+
+          // Phản hồi JSON tùy theo môi trường
+          res.status(status).json({
+            message: err.message,
+            ...(env === 'development' && { stack: err.stack }) // chỉ show stack khi ở dev
+          });
+        });
+
+        // Khởi chạy server
+        app.listen(3000, () => {
+          console.log('Server chạy ở cổng 3000');
+        });
+   
  * Tự bắt lỗi 404, 500
 
 
@@ -578,39 +729,165 @@ Bài tập nhỏ:
 
 
  * Trả response JSON tùy theo môi trường (dev vs prod)
+ 
+ Cách kiểm tra:
+  Kiểm tra:
+  chạy node .\error-handling.js: \n
+    Truy cập /error để test lỗi 500
 
+    Truy cập /khong-co-duong-nay để test lỗi 404
+
+    Xem log tại error.log
 
 
 
 PHẦN 47–49: HTTP nâng cao
 Câu hỏi:
  * GET vs POST khác nhau ở điểm nào?
-
+      ![alt text](image-8.png)
 
  * Cách lấy body trong POST request?
-
+        const express = require('express');
+        const app = express();
+        app.use(express.json()); // Middleware đọc body JSON
+        app.post('/data', (req, res) => {
+          console.log(req.body); // Truy cập dữ liệu
+          res.send('Đã nhận dữ liệu');
+        });
 
  * Dùng http.ServerResponse ra sao?
+       Khi không dùng Express, bạn dùng http.createServer() và res chính là đối tượng http.ServerResponse.
+        VD:
+        const http = require('http');
 
+        const server = http.createServer((req, res) => {
+          res.writeHead(200, { 'Content-Type': 'text/plain' });
+          res.end('Xin chào!');
+        });
 
+        server.listen(3000);
 Bài tập nhỏ:
  * Tạo server Express có route GET /, POST /data lưu data vào mảng.
- Bài tập nâng cao:
- * Tạo REST API quản lý tasks:
+        const express = require('express');
+        const app = express();
+        app.use(express.json());
 
+        const dataStore = [];
+
+        app.get('/', (req, res) => {
+          res.json(dataStore);
+        });
+
+        app.post('/data', (req, res) => {
+          dataStore.push(req.body);
+          res.status(201).json({ message: 'Đã thêm dữ liệu' });
+        });
+
+        app.listen(3000, () => console.log('Server chạy cổng 3000'));
+ Bài tập nâng cao:
+ Tạo REST API quản lý tasks:
 
  * CRUD: /tasks
-
-
  * Mỗi task có deadline, status
-
-
  * Tự động kiểm tra deadline quá hạn, chuyển status → "overdue"
+   Tạo 1 file .js rồi code mẫu:
+      const express = require('express');
+      const app = express();
+      app.use(express.json());
 
+      let tasks = [];
 
+      // Middleware kiểm tra token (giả lập)
+      app.use((req, res, next) => {
+        const token = req.headers.authorization;
+        if (token !== 'Bearer fake-token') {
+          return res.status(401).json({ message: 'Unauthorized' });
+        }
+        next();
+      });
+
+      // Middleware kiểm tra deadline & update status
+      function checkOverdue() {
+        const now = new Date();
+        tasks.forEach(task => {
+          if (task.status !== 'done' && new Date(task.deadline) < now) {
+            task.status = 'overdue';
+          }
+        });
+      }
+
+      // GET tất cả tasks
+      app.get('/tasks', (req, res) => {
+        checkOverdue();
+        res.json(tasks);
+      });
+
+      // POST tạo task
+      app.post('/tasks', (req, res) => {
+        const { title, deadline } = req.body;
+        const task = {
+          id: Date.now(),
+          title,
+          deadline,
+          status: 'pending'
+        };
+        tasks.push(task);
+        res.status(201).json(task);
+      });
+
+      // PUT cập nhật task
+      app.put('/tasks/:id', (req, res) => {
+        const task = tasks.find(t => t.id == req.params.id);
+        if (!task) return res.status(404).json({ message: 'Không tìm thấy task' });
+
+        const { title, deadline, status } = req.body;
+        if (title) task.title = title;
+        if (deadline) task.deadline = deadline;
+        if (status) task.status = status;
+
+        res.json(task);
+      });
+
+      // DELETE task
+      app.delete('/tasks/:id', (req, res) => {
+        tasks = tasks.filter(t => t.id != req.params.id);
+        res.status(204).send();
+      });
+
+      // Khởi động server
+      app.listen(3000, () => console.log('Task API chạy tại http://localhost:3000'));
+  
+  Chạy file: node tên file .js và test
 Bonus:
  * Dùng middleware kiểm tra auth token (giả lập).
+      Postman
+      Gửi GET/POST/PUT/DELETE đến http://localhost:3000/tasks
 
+      Thêm header: Authorization: Bearer fake-token
 
  * Gọi API test bằng Postman hoặc curl.
-
+     🔸  Postman
+      // Middleware kiểm tra token (giả lập)
+      app.use((req, res, next) => {
+        const token = req.headers.authorization;
+        if (token !== 'Bearer fake-token') {
+          return res.status(401).json({ message: 'Unauthorized' });
+        }
+        next();
+      });
+     post:
+     ![alt text](image-9.png)
+     get:
+     ![alt text](image-10.png)
+     put:
+    ![alt text](image-11.png)
+     delete:
+     ![alt text](image-12.png)
+    🔸 Curl test nhanh:
+    bash
+    Sao chép
+    Chỉnh sửa
+    curl -X POST http://localhost:3000/tasks \
+    -H "Content-Type: application/json" \
+    -H "Authorization: Bearer fake-token" \
+    -d '{"title":"Làm bài tập", "deadline":"2025-04-30T23:59:00"}'
