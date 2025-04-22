@@ -15,21 +15,55 @@
   - Mở terminal rồi viết `node` và khai báo biến.  
     ![alt text](image.png) 
   - Dùng `_`.  
-        > a
-        6
-        > _ * 6
-        36
-    
+    ```javascript
+    > a
+    6
+    > _ * 6
+    36
+    ```
   - Dùng phím Tab để tự động hoàn thành tên biến hoặc thuộc tính.  
-     viết 1 từ có trong thư mục hoặc có trong các câu lệnh rồi ấn tab để tự động điền
+    Viết 1 từ có trong thư mục hoặc có trong các câu lệnh rồi ấn Tab để tự động điền.
   - Dùng `.help` để xem các lệnh có sẵn.  
     ![alt text](image-1.png)
 
 ## 🎯 Bài tập nâng cao:
-- Tạo một file `repl-helper.js` khởi chạy custom REPL:  
-    ![alt text](image-2.png)
+- Tạo một file `repl-helper.js` khởi chạy custom REPL:
+  ```javascript
+  import repl from 'repl';
+  import fs from 'fs';
+
+  let commandHistory = [];
+
+  // Tạo REPL mà không cần custom eval
+  const server = repl.start({
+    prompt: '>> '
+  });
+
+  // Thêm hàm vào context REPL
+  server.context.sayHi = () => 'Hi there!';
+  server.context.now = () => new Date().toLocaleString();
+  server.context.sum = (a, b) => a + b;
+
+  // Lưu lệnh nhập vào history
+  server.on('line', (cmd) => {
+    commandHistory.push(cmd.trim());
+  });
+
+  // Command .save để lưu lịch sử
+  server.defineCommand('save', {
+    help: 'Lưu lịch sử REPL vào file history.txt',
+    action() {
+      fs.writeFileSync('history.txt', commandHistory.join('\n'), 'utf8');
+      console.log('Đã lưu lịch sử vào history.txt');
+      this.displayPrompt();
+    }
+  });
+  ```
+  ![alt text](image-2.png)
+
 - Gợi ý (autocomplete) các lệnh tự tạo: `sayHi`, `now`, `sum(a,b)`.  
-  Ví dụ: viết chữ `s` rồi Tab sẽ ra `sayHi`, sau đó viết thêm `()` để thành hàm, tương tự với `now` và `sum(a,b)`.  
+  Ví dụ: viết chữ `s` rồi Tab sẽ ra `sayHi`, sau đó viết thêm `()` để thành hàm, tương tự với `now` và `sum(a,b)`.
+
 - Khi gõ `.save` thì lưu lịch sử REPL vào file `history.txt`.  
   ![alt text](img/image-5.png)
 
@@ -40,7 +74,9 @@
 ## Câu hỏi:
 - **Làm sao nhận input từ `process.argv`?**  
   `process.argv` là mảng chứa các tham số dòng lệnh khi chạy chương trình Node.js:  
-
+  ```javascript
+  console.log(process.argv);
+  ```
   ![alt text](img/image-6.png)
 
 - **Khác biệt giữa `stdout` và `stderr`?**  
@@ -56,33 +92,72 @@
 
 - **Cách dùng `readline`?**  
   Module `readline` giúp đọc input từ terminal:  
-  1. Mở trình soạn thảo code (VS Code, Sublime Text, Notepad++).  
-  2. Tạo file mới với đuôi `.js`.  
-  3. Viết code `readline`.  
-  4. Lưu file.  
-  5. Mở terminal/command prompt.  
-  6. Di chuyển đến thư mục chứa file.  
-  7. Gõ lệnh `node tên_file.js`.  
-     ![alt text](img/image-8.png)
+  ```javascript
+  const readline = require('readline');
+  const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout
+  });
+
+  rl.question('What is your name? ', (answer) => {
+    console.log(`Hello, ${answer}!`);
+    rl.close();
+  });
+  ```
+  ![alt text](img/image-8.png)
 
 ## Bài tập nhỏ:
-- Viết file `sum.js` tính tổng 2 số từ dòng lệnh. 
-
-  ![alt text](img/image-9.png)  
+- Viết file `sum.js` tính tổng 2 số từ dòng lệnh.  
+  ```javascript
+  const args = process.argv.slice(2);
+  const a = parseFloat(args[0]);
+  const b = parseFloat(args[1]);
+  console.log(`Tổng: ${a + b}`);
+  ```
+  ![alt text](img/image-9.png)
 
 - Dùng `readline` hỏi tên và in ra `Hello <tên>`.  
+  ```javascript
+  const readline = require('readline');
+  const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout
+  });
 
+  rl.question('Nhập tên của bạn: ', (name) => {
+    console.log(`Hello, ${name}!`);
+    rl.close();
+  });
+  ```
   ![alt text](img/image-10.png)
 
 ## 🎯 Bài tập nâng cao:
 - Viết CLI tool `csv-summarizer.js` để đọc file, tính tổng, trung bình các cột số.  
-  ![alt text](img/image-12.png)  
-  ![alt text](img/image-13.png)  
-  ![alt text](img/image-14.png)  
-  ![alt text](img/image-15.png)  
-- Output ra `stdout` có định dạng bảng.  
+  ```javascript
+  const fs = require('fs');
+  const readline = require('readline');
 
-  ![alt text](img/image-11.png)
+  const rl = readline.createInterface({
+    input: fs.createReadStream('data.csv'),
+    output: process.stdout,
+    terminal: false
+  });
+
+  let sum = 0;
+  let count = 0;
+
+  rl.on('line', (line) => {
+    const values = line.split(',');
+    sum += parseFloat(values[1]);
+    count++;
+  });
+
+  rl.on('close', () => {
+    console.log(`Tổng: ${sum}`);
+    console.log(`Trung bình: ${sum / count}`);
+  });
+  ```
+  ![alt text](img/image-12.png)
 
 ---
 
@@ -104,23 +179,41 @@
   - Tăng tốc độ cài đặt trong lần sau.
 
 ## Bài tập nhỏ:
-- Tạo `package.json`, cài `chalk`, in dòng màu. 
-    npm i chalk
-    tạo file hello.js và code:\n
-          #!/usr/bin/env node
-          import chalk from 'chalk';
+- Tạo `package.json`, cài `chalk`, in dòng màu.  
+  ```bash
+  npm i chalk
+  ```
+  ```javascript
+  #!/usr/bin/env node
+  import chalk from 'chalk';
 
-          console.log(chalk.blue('Xin chào') + ' ' + chalk.red('thế giới!'));
-          console.log(chalk.bgGreen.black('Nền xanh chữ đen'));
-          console.log(chalk.bold.underline('In đậm và gạch chân'));
+  console.log(chalk.blue('Xin chào') + ' ' + chalk.red('thế giới!'));
+  console.log(chalk.bgGreen.black('Nền xanh chữ đen'));
+  console.log(chalk.bold.underline('In đậm và gạch chân'));
+  ```
+  ![alt text](image-3.png)
 
-          console.log('Xin chào từ NPX!');
-  ![alt text](image-3.png)  
-  
-- Tạo script `hello` gọi bằng `npx`.  \n
-
+- Tạo script `hello` gọi bằng `npx`.  
+  ```javascript
   #!/usr/bin/env node
   console.log("👋 Xin chào từ script npx!");
+  ```
+  Cấu hình `package.json`:
+  ```json
+  {
+    "name": "chalk-demo",
+    "version": "1.0.0",
+    "main": "index.js",
+    "bin": {
+      "hi": "./hi.js"
+    },
+    "scripts": {
+      "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "dependencies": {
+      "chalk": "^5.4.1"
+    }
+  }
   ```
 
 ## 🎯 Bài tập nâng cao:
@@ -136,8 +229,8 @@
     ├── package.json
     └── README.md
     ```
-  - Tạo module `slugify` trong `lib/slugify.js`.  \n
-    
+  - Tạo module `slugify` trong `lib/slugify.js`:
+    ```javascript
     function slugify(text) {
       return text
         .toLowerCase()
@@ -156,11 +249,12 @@
     }
 
     module.exports = slugify;
-
+   ```
  * Export CLI bằng bin/index.js, cho phép chạy bằng npx .
    - Tạo CLI
         bin/index.js
     code:\n
+       ```
       #!/usr/bin/env node
       const slugify = require('../lib/slugify');
       const args = process.argv.slice(2);
@@ -173,6 +267,7 @@
 
     const input = args.join(' ');
     console.log(slugify(input));
+       ```
     - Cấu hình package.json
             {
         "name": "slugify-cli",
@@ -200,12 +295,13 @@
  PHẦN 28–32: Event Loop
 Câu hỏi:
  * process.nextTick() vs setTimeout()?
+    ```
     process.nextTick()	        setTimeout()
     Thêm vào "next tick queue"	Thêm vào "timer queue"
     Thực thi sau phase hiện tại	Thực thi sau ít nhất 1ms
     Ưu tiên cao nhất	         Ưu tiên thấp hơn nextTick
     Có thể gây starvation	     Không gây starvation
-
+   ```
 * Stack và queue khác gì nhau?
 Call Stack: LIFO (Last In First Out) - nơi thực thi các hàm đồng bộ
 
@@ -214,6 +310,7 @@ Event Queue: FIFO (First In First Out) - nơi chứa các callback bất đồng
 Microtask Queue: Ưu tiên cao hơn Event Queue (chứa nextTick và Promise)
 
 * Dùng setImmediate() khi nào?
+
     Khi muốn thực thi code ngay sau khi event loop hoàn thành phase hiện tại
 
     Thường dùng để tránh blocking I/O operations
@@ -387,6 +484,7 @@ Bài tập nhỏ:
 🎯 Bài tập nâng cao:
  Viết công cụ log-archiver.cjs:
  * Lấy tất cả file .log trong thư mục /logs
+
   await ensureDir(archiveDir);
 
   const files = await fs.readdir(logsDir);
@@ -423,6 +521,12 @@ Yêu cầu:
 
 
 PHẦN 41–43: Event & HTTP
+  Event (sự kiện) là một hành động hoặc hiện tượng xảy ra trong ứng dụng – ví dụ: người dùng click chuột, một request đến server, một file được tải xong, v.v.
+
+  Trong frontend (React, HTML/JS): click, submit, hover,...
+
+  
+  HTTP (HyperText Transfer Protocol) là giao thức truyền tải dữ liệu giữa client (trình duyệt) và server.
 Câu hỏi:
  * emitter.on() vs once()?
   ![alt text](img/image-2.png)
