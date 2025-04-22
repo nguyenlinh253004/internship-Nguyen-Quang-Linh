@@ -721,14 +721,10 @@ Bài tập nhỏ:
         app.listen(3000, () => {
           console.log('Server chạy ở cổng 3000');
         });
-   
- * Tự bắt lỗi 404, 500
-
-
- * Log lỗi vào file error.log
-
-
- * Trả response JSON tùy theo môi trường (dev vs prod)
+ * Kết quả trả về:
+    * Tự bắt lỗi 404, 500
+    * Log lỗi vào file error.log
+    * Trả response JSON tùy theo môi trường (dev vs prod)
  
  Cách kiểm tra:
   Kiểm tra:
@@ -791,71 +787,72 @@ Bài tập nhỏ:
  * Mỗi task có deadline, status
  * Tự động kiểm tra deadline quá hạn, chuyển status → "overdue"
    Tạo 1 file .js rồi code mẫu:
-      const express = require('express');
-      const app = express();
-      app.use(express.json());
 
-      let tasks = [];
+            const express = require('express');
+            const app = express();
+            app.use(express.json());
 
-      // Middleware kiểm tra token (giả lập)
-      app.use((req, res, next) => {
-        const token = req.headers.authorization;
-        if (token !== 'Bearer fake-token') {
-          return res.status(401).json({ message: 'Unauthorized' });
-        }
-        next();
-      });
+            let tasks = [];
 
-      // Middleware kiểm tra deadline & update status
-      function checkOverdue() {
-        const now = new Date();
-        tasks.forEach(task => {
-          if (task.status !== 'done' && new Date(task.deadline) < now) {
-            task.status = 'overdue';
-          }
-        });
-      }
+            // Middleware kiểm tra token (giả lập)
+            app.use((req, res, next) => {
+              const token = req.headers.authorization;
+              if (token !== 'Bearer fake-token') {
+                return res.status(401).json({ message: 'Unauthorized' });
+              }
+              next();
+            });
 
-      // GET tất cả tasks
-      app.get('/tasks', (req, res) => {
-        checkOverdue();
-        res.json(tasks);
-      });
+            // Middleware kiểm tra deadline & update status
+            function checkOverdue() {
+              const now = new Date();
+              tasks.forEach(task => {
+                if (task.status !== 'done' && new Date(task.deadline) < now) {
+                  task.status = 'overdue';
+                }
+              });
+            }
 
-      // POST tạo task
-      app.post('/tasks', (req, res) => {
-        const { title, deadline } = req.body;
-        const task = {
-          id: Date.now(),
-          title,
-          deadline,
-          status: 'pending'
-        };
-        tasks.push(task);
-        res.status(201).json(task);
-      });
+            // GET tất cả tasks
+            app.get('/tasks', (req, res) => {
+              checkOverdue();
+              res.json(tasks);
+            });
 
-      // PUT cập nhật task
-      app.put('/tasks/:id', (req, res) => {
-        const task = tasks.find(t => t.id == req.params.id);
-        if (!task) return res.status(404).json({ message: 'Không tìm thấy task' });
+            // POST tạo task
+            app.post('/tasks', (req, res) => {
+              const { title, deadline } = req.body;
+              const task = {
+                id: Date.now(),
+                title,
+                deadline,
+                status: 'pending'
+              };
+              tasks.push(task);
+              res.status(201).json(task);
+            });
 
-        const { title, deadline, status } = req.body;
-        if (title) task.title = title;
-        if (deadline) task.deadline = deadline;
-        if (status) task.status = status;
+            // PUT cập nhật task
+            app.put('/tasks/:id', (req, res) => {
+              const task = tasks.find(t => t.id == req.params.id);
+              if (!task) return res.status(404).json({ message: 'Không tìm thấy task' });
 
-        res.json(task);
-      });
+              const { title, deadline, status } = req.body;
+              if (title) task.title = title;
+              if (deadline) task.deadline = deadline;
+              if (status) task.status = status;
 
-      // DELETE task
-      app.delete('/tasks/:id', (req, res) => {
-        tasks = tasks.filter(t => t.id != req.params.id);
-        res.status(204).send();
-      });
+              res.json(task);
+            });
 
-      // Khởi động server
-      app.listen(3000, () => console.log('Task API chạy tại http://localhost:3000'));
+            // DELETE task
+            app.delete('/tasks/:id', (req, res) => {
+              tasks = tasks.filter(t => t.id != req.params.id);
+              res.status(204).send();
+            });
+
+            // Khởi động server
+            app.listen(3000, () => console.log('Task API chạy tại http://localhost:3000'));
   
   Chạy file: node tên file .js và test
 Bonus:
@@ -876,12 +873,16 @@ Bonus:
         next();
       });
      post:
+
      ![alt text](image-9.png)
      get:
+
      ![alt text](image-10.png)
      put:
+
     ![alt text](image-11.png)
      delete:
+
      ![alt text](image-12.png)
     🔸 Curl test nhanh:
     bash
