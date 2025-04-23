@@ -15,7 +15,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(morgan('dev'));
 app.use(express.static('screenshot'));
 
-// ✅ Kiểm tra kết nối database
+// ✅ Kiểm tra kết nối database trước khi khởi động server
 db.query('SELECT 1')
   .then(() => console.log('✅ Connected to database'))
   .catch((error) => {
