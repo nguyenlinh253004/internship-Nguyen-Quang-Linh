@@ -17,7 +17,7 @@ Xây dựng một hệ thống backend để quản lý đơn hàng, sản phẩ
 
 1. **Clone dự án**:
    ```bash
-   git clone https://github.com/yourusername/order-management-system.git
+   git clone https://github.com/nguyenlinh253004/internship-Nguyen-Quang-Linh/tree/822fec49573d8fbba02f47e0093873108af5c621/Mini%20Project
    cd Mini Project
    npm i để tải các package để cấu hình.
 ### Triển khai chi tiết
