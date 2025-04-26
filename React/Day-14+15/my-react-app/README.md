@@ -14,11 +14,12 @@ Currently, two official plugins are available for integrating React with Vite:
 
 ## Expanding the ESLint Configuration
 
-If you are developing a production-grade application, it is recommended to use TypeScript with type-aware linting rules enabled. This ensures better code quality and maintainability. You can refer to the [TypeScript template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for guidance on integrating TypeScript and [`typescript-eslint`](https://typescript-eslint.io) into your project.
+For production-grade applications, it is recommended to use TypeScript with type-aware linting rules enabled. This ensures better code quality and maintainability. Refer to the [TypeScript template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for guidance on integrating TypeScript and [`typescript-eslint`](https://typescript-eslint.io) into your project.
 
 ## Project Structure
 
 Below is an example of a typical project structure for a React application using Vite:
+
 ```
 my-react-app/
 ├── src/
@@ -57,14 +58,45 @@ npm create vite@latest my-react-app --template react
 cd my-react-app
 npm install
 ```
-chạy app:
-```bash
-npm run dev
-```
+
 ### 2. Install Additional Libraries (Optional)
 
-If needed, you can install additional libraries. For example, to use icons in your project, you can install the `react-icons` library:
+To use icons in your project, you can install the `react-icons` library:
 
 ```bash
 npm install react-icons
+npm install heroicons/react
+```
+
+## Key Features
+
+- Modern UI with Tailwind CSS
+- Responsive design for all devices
+- State management using `localStorage`
+- Product form with validation
+- Smart shopping cart:
+  - Add/remove/update product quantities
+  - Automatic total calculation
+  - Empty cart display
+- Enhanced UX with hover effects and transitions
+- Well-organized, maintainable code
+
+## Running the Application
+
+### Install Dependencies
+
+```bash
+npm install
+```
+
+### Start Development Server
+
+```bash
+npm run dev
+```
+
+### Build for Production
+
+```bash
+npm run build
 ```
