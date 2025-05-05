@@ -1,28 +1,24 @@
-// import { useState } from 'react'
-import { Routes, Route } from 'react-router-dom'
-import  CartProvider  from './context/CartContext'
-import Home from './pages/home'
-import ProductDetails from './pages/ProductDetai'
-import Cart from './pages/Cart'
-import Navbar from './components/Navbar'
-function App() {
- 
-
+import React from 'react';
+import { Routes, Route, Link } from 'react-router-dom';
+import ProductList from './components/ProductList';
+import ProductForm from './components/ProductForm';
+import CartPage from './components/Cart';
+import AdminProductList from './components/AdminProductList';
+export default function App() {
   return (
-    <>
-     <CartProvider>
-      <div className='container mx-auto px-4'>
-        <Navbar />
-        {/* Define your routes here */}
+    <div className="container mx-auto p-4">
+      <nav className="flex gap-4 mb-4">
+        <Link to="/products" className="text-blue-600">Products</Link>
+        <Link to="/admin" className="text-blue-600">Admin</Link>
+        <Link to="/cart" className="text-blue-600">Cart</Link>
+      </nav>
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/product/:id" element={<ProductDetails />} />
-        <Route path="/cart" element={<Cart />} />
+        <Route path="/products" element={<ProductList />} />
+        <Route path="/admin" element={<ProductForm />} />
+        <Route path="/cart" element={<CartPage />} />
+        <Route path="/admin/products" element={<AdminProductList />} />
+        <Route path="*" element={<ProductList />} />
       </Routes>
-      </div>
-     </CartProvider>
-    </>
-  )
+    </div>
+  );
 }
-
-export default App

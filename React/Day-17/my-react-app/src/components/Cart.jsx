@@ -11,9 +11,9 @@ export default function CartPage() {
           {cart.map(item => (
             <li key={item.id} className="mb-2">
               {item.name} x {item.quantity} = {item.price * item.quantity}₫
-              <button onClick={() => update(item.id, item.quantity - 1)}>-</button>
-              <button onClick={() => update(item.id, item.quantity + 1)}>+</button>
-              <button onClick={() => remove(item.id)}>Del</button>
+              <button onClick={() => update(item.id, item.quantity - 1)} className='bg-red-500 p-2 mr-4'>-</button>
+              <button onClick={() => update(item.id, item.quantity + 1)} className='bg-green-500 p-2 mr-4'>+</button>
+              <button onClick={() => remove(item.id)} className='text-red-600'>Del</button>
             </li>
           ))}
         </ul>

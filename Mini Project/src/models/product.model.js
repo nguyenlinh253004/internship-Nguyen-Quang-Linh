@@ -16,7 +16,7 @@ class Product{
           params.push(category);
         }
     
-        query += ' LIMIT ? OFFSET ?';
+        query += ' ORDER BY id ASC LIMIT ? OFFSET ?';
         params.push(limit, offset);
     
         const [products] = await db.query(query, params);

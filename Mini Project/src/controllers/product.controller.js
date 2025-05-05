@@ -3,10 +3,13 @@ const { validationResult } = require('express-validator');
 
 exports.getAllProducts = async (req, res, next) => {
   try {
-    const { page = 1, limit = 10, search, category } = req.query;
+    const { page = 1, limit = 5, search, category, skip } = req.query;
+    
+    // Tính page từ skip nếu skip được gửi
+    const effectivePage = skip ? Math.floor(parseInt(skip) / parseInt(limit)) + 1 : parseInt(page);
     
     const products = await Product.findAll({ 
-      page: parseInt(page), 
+      page: effectivePage, 
       limit: parseInt(limit), 
       search, 
       category 
@@ -18,7 +21,7 @@ exports.getAllProducts = async (req, res, next) => {
       success: true,
       data: products,
       pagination: {
-        page: parseInt(page),
+        page: effectivePage,
         limit: parseInt(limit),
         total,
         totalPages: Math.ceil(total / limit)
