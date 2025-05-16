@@ -12,6 +12,7 @@ export default function ProductListPage() {
 
   const handleLogout = () => {
     localStorage.removeItem('token');
+    localStorage.removeItem('role');
     toast.success('Đăng xuất thành công');
     navigate('/login'); // Chuyển hướng về trang login
   };

@@ -1,4 +1,4 @@
-import React, { createContext, useReducer } from 'react';
+import React, { createContext, useReducer,useState } from 'react';
 import useLocalStorage from '../hooks/useLocalStorage';
 
 export const CartContext = createContext();
@@ -75,10 +75,22 @@ export function CartProvider({ children }) {
     dispatch({ type: 'UPDATE_QUANTITY', payload: { id, quantity } });
   const clearCart  = ()   => dispatch({ type: 'CLEAR_CART' });
   const totalItems = state.items.reduce((sum, i) => sum + i.quantity, 0);
+  const getStoredImages = () => {
+    try {
+      return JSON.parse(localStorage.getItem('productImages')) || {};
+    } catch {
+      return {};
+    }
+  };
+  const [storedImages] = useState(getStoredImages());
   return (
     <CartContext.Provider
       value={{
-        items: state.items,
+        items: state.items.map(p => ({
+          ...p,
+          // Thêm ảnh từ storage nếu có
+          image: storedImages[p.id] || p.image
+        })),
         totalAmount: state.totalAmount,
         addItem,
         removeItem,

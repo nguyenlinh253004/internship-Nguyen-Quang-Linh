@@ -23,6 +23,7 @@ export default function LoginPage({setToken}) {
       const res = await axiosInstance.post('/auth/login', data);
       localStorage.setItem('token', res.data.token);
       setToken(res.data.token);
+      localStorage.setItem('role', JSON.stringify(res.data.user.role));
       toast.success('Đăng nhập thành công!');
       navigate('/products'); // ✅ THÊM DÒNG NÀY để chuyển trang ngay sau login
     } catch (err) {
