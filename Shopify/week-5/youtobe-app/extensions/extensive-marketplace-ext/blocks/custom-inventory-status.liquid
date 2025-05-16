@@ -1,0 +1,41 @@
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const container = document.querySelector('.product-api-data[data-product-id="{{ product.id }}"] .api-data-container');
+  const productId = {{ product.id }};
+
+  if (!container) {
+    console.error('Container element not found for product ID:', productId);
+    return;
+  }
+
+  fetch('https://jsonplaceholder.typicode.com/posts/1')
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      return response.json();
+    })
+    .then(data => {
+      container.innerHTML = `<p>API Data: ${data.title}</p>`;
+    })
+    .catch(error => {
+      container.innerHTML = '<p>Could not load inventory data</p>';
+      console.error('Error fetching API data:', error);
+    });
+});
+</script>
+
+{% schema %}
+{
+  "name": "Product API Data",
+  "target": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Inventory Information"
+    }
+  ]
+}
+{% endschema %}

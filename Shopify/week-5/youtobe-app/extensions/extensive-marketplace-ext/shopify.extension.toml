@@ -1,0 +1,5 @@
+name = "Extensive Marketplace"
+handle = "extensive-marketplace-ext"
+type = "theme_app_extension"
+version = "1.0.0"
+description = "My marketplace extension"

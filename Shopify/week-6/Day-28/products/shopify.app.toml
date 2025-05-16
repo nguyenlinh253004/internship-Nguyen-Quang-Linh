@@ -1,0 +1,36 @@
+# Learn more about configuring your app at https://shopify.dev/docs/apps/tools/cli/configuration
+
+client_id = "f046cb66328fc8309b84f4f1a4678c6f"
+name = "Products"
+handle = "products-114"
+application_url = "https://antiques-graphical-changelog-baby.trycloudflare.com"
+embedded = true
+
+[build]
+include_config_on_deploy = true
+automatically_update_urls_on_dev = true
+
+[webhooks]
+api_version = "2025-04"
+
+  [[webhooks.subscriptions]]
+  topics = [ "app/uninstalled" ]
+  uri = "/webhooks/app/uninstalled"
+
+  [[webhooks.subscriptions]]
+  topics = [ "app/scopes_update" ]
+  uri = "/webhooks/app/scopes_update"
+
+[access_scopes]
+# Learn more at https://shopify.dev/docs/apps/tools/cli/configuration#access_scopes
+scopes = "write_products"
+
+[auth]
+redirect_urls = [
+  "https://antiques-graphical-changelog-baby.trycloudflare.com/auth/callback",
+  "https://antiques-graphical-changelog-baby.trycloudflare.com/auth/shopify/callback",
+  "https://antiques-graphical-changelog-baby.trycloudflare.com/api/auth/callback"
+]
+
+[pos]
+embedded = false
