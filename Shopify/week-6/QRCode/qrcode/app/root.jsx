@@ -5,11 +5,21 @@ import {
   Scripts,
   ScrollRestoration,
 } from "@remix-run/react";
+import { AppProvider } from '@shopify/polaris';
+import enTranslations from '@shopify/polaris/locales/en.json';
 import * as Polaris from "@shopify/polaris";
 import "@shopify/polaris/build/esm/styles.css";
-import { AppBridgeProvider } from "./hooks/useAppBridge";
+import { useMemo } from "react";
+// import { AppBridgeProvider } from "./hooks/useAppBridge";
 
 export default function App() {
+  // const config = useMemo(
+  //   () => ({
+  //     apiKey: process.env.SHOPIFY_API_KEY, // Thay bằng API Key từ Shopify Partner Dashboard
+  //     host: new URLSearchParams(window.location.search).get('host'),
+  //   }),
+  //   []
+  // );
   return (
     <html>
       <head>
@@ -24,15 +34,12 @@ export default function App() {
         <Links />
       </head>
       <body>
-          <Polaris.AppProvider i18n={vi}>
-            <AppBridgeProvider>
-            <Polaris.Frame>
+        <AppProvider i18n={enTranslations}>   
               <Outlet />
-            </Polaris.Frame>
-        </AppBridgeProvider>
-          </Polaris.AppProvider>
+        </AppProvider>
         <ScrollRestoration />
         <Scripts />
+
       </body>
     </html>
   );
