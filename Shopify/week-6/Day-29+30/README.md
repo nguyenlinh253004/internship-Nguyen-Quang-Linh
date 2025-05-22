@@ -1,36 +1,39 @@
-Day 29-30: Shopify React Hooks + API Admin nâng cao
-Nội dung chính
-1. Shopify React Hooks
-App Bridge là cầu nối giữa ứng dụng của bạn và Shopify Admin, cung cấp các công cụ quan trọng như xác thực, chuyển hướng, và truy cập API.
+# Day 29-30: Shopify React Hooks & Advanced API Admin
 
-useAppBridge
+## Nội dung chính
 
-Hook useAppBridge cung cấp quyền truy cập vào instance của App Bridge, cho phép bạn tương tác với Shopify Admin:
+### 1. Shopify React Hooks
 
-Điều hướng trong Shopify Admin
-Hiển thị toast, modal
-Truy cập token xác thực
-Giao tiếp với Shopifys
+**App Bridge** là cầu nối giữa ứng dụng và Shopify Admin, cung cấp các công cụ như xác thực, chuyển hướng, và truy cập API.
 
-javascriptimport { useAppBridge } from '@shopify/app-bridge-react';
+#### `useAppBridge`
+
+Hook này cung cấp quyền truy cập vào instance của App Bridge, cho phép bạn:
+
+- Điều hướng trong Shopify Admin
+- Hiển thị toast, modal
+- Truy cập token xác thực
+- Giao tiếp với Shopify
+
+```js
+import { useAppBridge } from '@shopify/app-bridge-react';
 
 function MyComponent() {
   const app = useAppBridge();
-```js
-// Sử dụng app để tương tác với AppBridge
-```
+  // Sử dụng app để tương tác với AppBridge
 }
-useAuthenticatedFetch
+```
 
-Hook để thực hiện các yêu cầu fetch đã được xác thực đến backend của ứng dụng
-Tự động xử lý token xác thực và các chi tiết bảo mật
-Đơn giản hóa việc gọi API từ frontend đến backend
+#### `useAuthenticatedFetch`
 
-javascriptimport { useAuthenticatedFetch } from '@shopify/app-bridge-react';
+Hook để thực hiện các yêu cầu fetch đã được xác thực đến backend của ứng dụng. Tự động xử lý token xác thực và đơn giản hóa việc gọi API.
+
+```js
+import { useAuthenticatedFetch } from '@shopify/app-bridge-react';
 
 function MyComponent() {
   const fetch = useAuthenticatedFetch();
-  
+
   useEffect(() => {
     async function fetchData() {
       const response = await fetch('/api/products');
@@ -40,19 +43,25 @@ function MyComponent() {
     fetchData();
   }, []);
 }
-2. Call Shopify Admin API qua App Bridge
-GraphQL Admin API
+```
 
-Sử dụng GraphQL để truy vấn dữ liệu từ Shopify Admin API
-Cấu trúc yêu cầu và thiết lập headers đúng
+---
 
-javascriptimport { useAppBridge } from '@shopify/app-bridge-react';
+### 2. Gọi Shopify Admin API qua App Bridge
+
+#### GraphQL Admin API
+
+- Sử dụng GraphQL để truy vấn dữ liệu từ Shopify Admin API
+- Thiết lập headers đúng
+
+```js
+import { useAppBridge } from '@shopify/app-bridge-react';
 import { authenticatedFetch } from '@shopify/app-bridge-utils';
 
 function ProductList() {
   const app = useAppBridge();
   const fetch = authenticatedFetch(app);
-  
+
   async function fetchProducts() {
     const query = `
       {
@@ -68,53 +77,54 @@ function ProductList() {
         }
       }
     `;
-    
+
     const response = await fetch('/api/graphql', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        query
-      }),
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ query }),
     });
-    
+
     const data = await response.json();
     return data;
   }
 }
-REST Admin API
+```
 
-Cách tiếp cận thay thế để truy cập dữ liệu thông qua REST API
-Cấu trúc yêu cầu và xử lý phản hồi
+#### REST Admin API
 
-javascriptimport { useAppBridge } from '@shopify/app-bridge-react';
+- Truy cập dữ liệu thông qua REST API
+
+```js
+import { useAppBridge } from '@shopify/app-bridge-react';
 import { getSessionToken } from '@shopify/app-bridge-utils';
 
 function ProductManager() {
   const app = useAppBridge();
-  
+
   async function fetchProductsREST() {
     const token = await getSessionToken(app);
-    
+
     const response = await fetch('/api/products', {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
+      headers: { Authorization: `Bearer ${token}` },
     });
-    
+
     const data = await response.json();
     return data;
   }
 }
-3. Pagination / Filter / Query param
-Pagination với GraphQL
+```
 
-Cách triển khai pagination trong GraphQL API của Shopify
-Sử dụng các tham số first, last, before, after
-Triển khai cursor-based pagination
+---
 
-javascriptconst query = `
+### 3. Pagination / Filter / Query param
+
+#### Pagination với GraphQL
+
+- Sử dụng các tham số `first`, `after`, `before`, `last`
+- Triển khai cursor-based pagination
+
+```js
+const query = `
   {
     products(first: 10, after: "${cursor}") {
       edges {
@@ -130,13 +140,13 @@ javascriptconst query = `
     }
   }
 `;
-Filtering và Search
+```
 
-Lọc sản phẩm bằng các tham số query
-Tìm kiếm theo tiêu đề, nhà cung cấp, hoặc thẻ
-Xây dựng các bộ lọc động
+#### Filtering và Search
 
-javascript// Ví dụ GraphQL query với filter
+- Lọc sản phẩm bằng các tham số query (ví dụ: theo tiêu đề)
+
+```js
 const query = `
   {
     products(first: 10, query: "title:${searchTerm}") {
@@ -149,51 +159,55 @@ const query = `
     }
   }
 `;
-Quản lý Query Parameters
+```
 
-Theo dõi và cập nhật các tham số query trong URL
-Lưu trữ trạng thái lọc và tìm kiếm
-Triển khai chuyển hướng trang với các tham số query
+#### Quản lý Query Parameters
 
-javascriptimport { useLocation, useNavigate } from 'react-router-dom';
+- Theo dõi và cập nhật các tham số query trong URL
+
+```js
+import { useLocation, useNavigate } from 'react-router-dom';
 
 function ProductFilters() {
   const location = useLocation();
   const navigate = useNavigate();
   const queryParams = new URLSearchParams(location.search);
-  
+
   function updateFilters(newFilters) {
     Object.entries(newFilters).forEach(([key, value]) => {
-      if (value) {
-        queryParams.set(key, value);
-      } else {
-        queryParams.delete(key);
-      }
+      if (value) queryParams.set(key, value);
+      else queryParams.delete(key);
     });
-    
+
     navigate(`${location.pathname}?${queryParams.toString()}`);
   }
 }
-Bài tập
-Tạo trang /admin-products
+```
 
-Tạo route mới trong ứng dụng
+---
 
-javascript// src/App.jsx
+## Bài tập: Tạo trang `/admin-products`
+
+### 1. Tạo route mới
+
+```js
+// src/App.jsx
 import AdminProducts from './pages/AdminProducts';
 
 function App() {
   return (
     <Routes>
-      {/* Routes khác */}
+      {/* Các routes khác */}
       <Route path="/admin-products" element={<AdminProducts />} />
     </Routes>
   );
 }
+```
 
-Tạo component AdminProducts
+### 2. Tạo component `AdminProducts`
 
-javascript// src/pages/AdminProducts.jsx
+```js
+// src/pages/AdminProducts.jsx
 import { useState, useEffect } from 'react';
 import { useAppBridge } from '@shopify/app-bridge-react';
 import { Card, Layout, Page } from '@shopify/polaris';
@@ -201,15 +215,15 @@ import { Card, Layout, Page } from '@shopify/polaris';
 export default function AdminProducts() {
   const [products, setProducts] = useState([]);
   const app = useAppBridge();
-  
+
   useEffect(() => {
     fetchProducts();
   }, []);
-  
+
   async function fetchProducts() {
     // Code để fetch sản phẩm sẽ được triển khai ở bước sau
   }
-  
+
   return (
     <Page title="Admin Products">
       <Layout>
@@ -222,20 +236,23 @@ export default function AdminProducts() {
     </Page>
   );
 }
-Call thật Shopify Admin API (GraphQL)
+```
 
-Thiết lập các hàm gọi API GraphQL
+### 3. Call thật Shopify Admin API (GraphQL)
 
-javascript// src/utils/shopifyApi.js
+#### Thiết lập hàm gọi API
+
+```js
+// src/utils/shopifyApi.js
 import { authenticatedFetch } from '@shopify/app-bridge-utils';
 
 export async function fetchProductsWithGraphQL(app, options = {}) {
   const { first = 10, query = '', cursor = null } = options;
   const fetch = authenticatedFetch(app);
-  
+
   const afterParam = cursor ? `, after: "${cursor}"` : '';
   const queryString = query ? `, query: "${query}"` : '';
-  
+
   const graphqlQuery = `
     {
       products(first: ${first}${afterParam}${queryString}) {
@@ -270,18 +287,14 @@ export async function fetchProductsWithGraphQL(app, options = {}) {
       }
     }
   `;
-  
+
   try {
     const response = await fetch('/api/graphql', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        query: graphqlQuery
-      }),
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ query: graphqlQuery }),
     });
-    
+
     const data = await response.json();
     return data.data.products;
   } catch (error) {
@@ -289,15 +302,17 @@ export async function fetchProductsWithGraphQL(app, options = {}) {
     throw error;
   }
 }
+```
 
-Cập nhật component AdminProducts để sử dụng API
+#### Cập nhật component `AdminProducts` để sử dụng API
 
-javascript// src/pages/AdminProducts.jsx
+```js
+// src/pages/AdminProducts.jsx
 import { useState, useEffect, useCallback } from 'react';
 import { useAppBridge } from '@shopify/app-bridge-react';
-import { 
-  Card, Layout, Page, ResourceList, TextField, 
-  Filters, Pagination, ResourceItem, Thumbnail, TextStyle 
+import {
+  Card, Layout, Page, ResourceList, TextField,
+  Filters, Pagination, ResourceItem, Thumbnail, TextStyle, Button
 } from '@shopify/polaris';
 import { fetchProductsWithGraphQL } from '../utils/shopifyApi';
 
@@ -309,7 +324,7 @@ export default function AdminProducts() {
   const [hasNextPage, setHasNextPage] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const app = useAppBridge();
-  
+
   const fetchProducts = useCallback(async () => {
     setIsLoading(true);
     try {
@@ -318,7 +333,7 @@ export default function AdminProducts() {
         query: queryValue ? `title:*${queryValue}*` : '',
         cursor: cursor
       });
-      
+
       setProducts(result.edges.map(edge => edge.node));
       setHasNextPage(result.pageInfo.hasNextPage);
       setCursor(result.pageInfo.endCursor);
@@ -328,24 +343,24 @@ export default function AdminProducts() {
       setIsLoading(false);
     }
   }, [app, queryValue, cursor]);
-  
+
   useEffect(() => {
     fetchProducts();
   }, [fetchProducts]);
-  
+
   const handleSearchChange = useCallback((value) => {
     setSearchValue(value);
   }, []);
-  
+
   const handleSearchSubmit = useCallback(() => {
     setQueryValue(searchValue);
     setCursor(null);
   }, [searchValue]);
-  
+
   const handleNextPage = useCallback(() => {
     fetchProducts();
   }, [fetchProducts]);
-  
+
   return (
     <Page title="Admin Products">
       <Layout>
@@ -374,14 +389,14 @@ export default function AdminProducts() {
               loading={isLoading}
               renderItem={(product) => {
                 const { id, title, vendor, images, priceRangeV2 } = product;
-                const media = images.edges[0] 
-                  ? <Thumbnail source={images.edges[0].node.url} alt={images.edges[0].node.altText || title} /> 
+                const media = images.edges[0]
+                  ? <Thumbnail source={images.edges[0].node.url} alt={images.edges[0].node.altText || title} />
                   : null;
-                
-                const price = priceRangeV2?.minVariantPrice?.amount 
-                  ? `${priceRangeV2.minVariantPrice.amount} ${priceRangeV2.minVariantPrice.currencyCode}` 
+
+                const price = priceRangeV2?.minVariantPrice?.amount
+                  ? `${priceRangeV2.minVariantPrice.amount} ${priceRangeV2.minVariantPrice.currencyCode}`
                   : 'No price';
-                
+
                 return (
                   <ResourceItem
                     id={id}
@@ -410,36 +425,41 @@ export default function AdminProducts() {
     </Page>
   );
 }
-Hiển thị danh sách sản phẩm có filter theo title
+```
 
-Hoàn thiện backend API endpoint
+---
 
-javascript// server/middleware/graphql.js
+### 4. Hoàn thiện backend API endpoint
+
+```js
+// server/middleware/graphql.js
 import { Shopify } from '@shopify/shopify-api';
 
 export default async function graphqlProxy(req, res) {
   try {
     const session = await Shopify.Utils.loadCurrentSession(req, res);
-    
+
     if (!session) {
       return res.status(401).send('Unauthorized');
     }
-    
+
     const client = new Shopify.Clients.Graphql(session.shop, session.accessToken);
     const response = await client.query({
       data: req.body,
     });
-    
+
     res.status(200).send(response.body);
   } catch (error) {
     console.error('GraphQL proxy error:', error);
     res.status(500).send(error.message);
   }
 }
+```
 
-Thiết lập route trong Express
+#### Thiết lập route trong Express
 
-javascript// server/index.js
+```js
+// server/index.js
 import express from 'express';
 import graphqlProxy from './middleware/graphql.js';
 
@@ -451,31 +471,21 @@ app.use(express.json());
 app.post('/api/graphql', graphqlProxy);
 
 // ... phần còn lại của ứng dụng
-Tổng kết
-Trong ngày 29-30, chúng ta đã tìm hiểu:
+```
 
-Cách sử dụng Shopify React Hooks:
+---
+**Kết quả:**  
+Phân trang, filter, search đã được tích hợp.
 
-useAppBridge để truy cập đối tượng AppBridge
-useAuthenticatedFetch để thực hiện các yêu cầu đã xác thực
+![alt text](image.png)
+## Tổng kết
 
+Trong ngày 29-30, bạn đã học:
 
-Cách gọi Shopify Admin API thông qua App Bridge:
-
-Sử dụng GraphQL để truy vấn dữ liệu
-Thiết lập xác thực và headers đúng
-
-
-Triển khai pagination, filtering và query params:
-
-Cursor-based pagination với GraphQL
-Filtering sản phẩm theo tiêu đề
-Quản lý các tham số query trong URL
-
-
-
-Thông qua bài tập, chúng ta đã tạo được một trang admin sản phẩm hoạt động hoàn chỉnh với các chức năng:
-
-Hiển thị danh sách sản phẩm từ Shopify Admin API
-Tìm kiếm và lọc sản phẩm theo tiêu đề
-Phân trang để xem thêm sản phẩm
+- Sử dụng Shopify React Hooks: `useAppBridge`, `useAuthenticatedFetch`
+- Gọi Shopify Admin API qua App Bridge (GraphQL & REST)
+- Triển khai pagination, filtering, query params
+- Tạo trang admin sản phẩm với các chức năng:
+  - Hiển thị danh sách sản phẩm từ Shopify Admin API
+  - Tìm kiếm, lọc sản phẩm theo tiêu đề
+  - Phân trang để xem thêm sản phẩm
