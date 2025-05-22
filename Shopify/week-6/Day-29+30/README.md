@@ -480,7 +480,7 @@ Phân trang, filter, search đã được tích hợp.
 ![alt text](image.png)
 ## Tổng kết
 
-Trong ngày 29-30, bạn đã học:
+Trong ngày 29-30:
 
 - Sử dụng Shopify React Hooks: `useAppBridge`, `useAuthenticatedFetch`
 - Gọi Shopify Admin API qua App Bridge (GraphQL & REST)

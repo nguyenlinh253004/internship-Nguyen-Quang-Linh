@@ -464,7 +464,6 @@ function renderProductWithActions(item, setSelectedProduct, setShowDeleteModal) 
 
 ## 🎯 Mục tiêu hoàn thành
 
-Sau khi hoàn thành bài học này, bạn sẽ có thể:
 
 - Hiểu được các nguyên tắc cơ bản của Polaris Design System
 - Sử dụng thành thạo các component chính như Card, ResourceList, Form, Modal
