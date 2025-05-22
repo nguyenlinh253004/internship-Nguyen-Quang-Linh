@@ -3,7 +3,7 @@
 client_id = "90dd11855e0a2805bab84ef208d22cd8"
 name = "QRCODE"
 handle = "qrcode-293"
-application_url = "https://level-reviews-fragrances-materials.trycloudflare.com"
+application_url = "https://option-laugh-idle-alexandria.trycloudflare.com"
 embedded = true
 
 [build]
@@ -27,9 +27,9 @@ scopes = "write_products"
 
 [auth]
 redirect_urls = [
-  "https://level-reviews-fragrances-materials.trycloudflare.com/auth/callback",
-  "https://level-reviews-fragrances-materials.trycloudflare.com/auth/shopify/callback",
-  "https://level-reviews-fragrances-materials.trycloudflare.com/api/auth/callback"
+  "https://option-laugh-idle-alexandria.trycloudflare.com/auth/callback",
+  "https://option-laugh-idle-alexandria.trycloudflare.com/auth/shopify/callback",
+  "https://option-laugh-idle-alexandria.trycloudflare.com/api/auth/callback"
 ]
 
 [pos]

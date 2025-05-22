@@ -378,6 +378,7 @@ mutation webhookSubscriptionCreate($topic: WebhookSubscriptionTopic!, $webhookSu
 
 **Yêu cầu:**
 1. Đăng ký webhook `orders/create` trong ứng dụng Remix Shopify
+![alt text](screenshot/image1.png)
 2. Tạo endpoint để xử lý webhook và log dữ liệu nhận được ra console
 3. Tạo thêm một webhook cho sự kiện `products/update` để theo dõi khi sản phẩm được cập nhật
 4. Đảm bảo xử lý lỗi đúng cách và trả về mã HTTP phù hợp

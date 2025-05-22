@@ -1,4 +1,3 @@
-# Shopify App Template - Remix
 ## Hướng dẫn xây dựng tính năng QR Code cho Shopify App với Remix
 
 ### 1. Khởi tạo ứng dụng và cấu hình
@@ -198,3 +197,8 @@ const [sortConfig, setSortConfig] = useState({
   direction: 'ASC',
 });
 ```
+
+**Kết quả:**  
+Phân trang, filter, search đã được tích hợp.
+
+![alt text](image.png)
